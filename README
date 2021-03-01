@@ -1,0 +1,77 @@
+Student: Boldișor Dragoș-Alexandru
+Grupa: 312CB
+
+            Structuri de Date
+                TEMA 3
+
+Tema conține un Makefile și 8 fișiere sursă în această ordine:
+
+1. def_types.h care are definiția tipurilor pentru arbore precum și definiția
+unei liste generice folosită pentru stive și cozi.
+
+2 & 3. Stiva_Coada.c si Stiva_Coada.h care conțin definiția tipurilor,
+funcțiile și macro-urile necesare.
+
+4. interpret.c - conține funcția centrală Interpret care primește ca argumente
+un pointer către tipul arbore (TArb *), un caracter, o variabilă din tipul
+TParseState (un automat de stări), precum și o stivă de strămoși și două
+string-uri în care se țin temporar numele și valoarea unui atribut. De
+asemenea, mai există și alte funcții auxiliare: itoa - care transforma un int
+in char* (alocat); TagNode  - crează tag nou și îl leagă în arbore prin
+intermediul unei stive de strămoși (vârful fiind părintele noului nod); endTag
+care va repara contents astfel încât să nu conțină spații la final și (*a) se
+face NULL, iar în cazul în care (*a) este deja NULL (adică se iese din 2 sau
+mai multe tag-uri consecutive), scoatem primul părinte din stiva de strămoși.
+În momentul în care stiva este vidă, înseamnă că am ajuns la final;
+createStyle, insertStyle și insertAttr care fac inserări în lista de atribute.
+
+5. interpret.h - conține definiția automatului de stări și antentul funcțiilor
+care vor fi folosite în alte fișiere sursă.
+
+6. utils.c - conține funcțiile apelate în fișierul sursă central (tema3.c):
+Begin, End, formatText, addTag, findNode; precum și alte funcții auxiliare.
+Funcția Begin are rol de inițializare a arborelui: inițializează și
+citește cu ajutorul funcției Interpret. Returnează rădacina arborelui.
+Funcția End are rolul de a dezaloca arborele în vederea încheierii programului.
+Funcția formatText este o funție recursivă care se folosește de întregul niv
+care specifică nivelul de adâncime în parcurgerea arborelui pentru a ști câte
+tab-uri sunt necesare pentru afișare.
+Funcția addTag - adaugă un nou copil la tag-ul cu id-ul specificat în comandă,
+parcurgerea se face eficient, după id.
+Funcția findNode - funcție apelată pentru task-urile deleteRecursevely,
+overrideStyle și appendStyle. Verifică ce tip de comandă este și reține în
+task, apoi obține selectorul și apelează funcția specifică de găsire a
+nodurilor care respectă cerința. Astfel se definesc funcțiile:
+ - findNode_class, findNode_elem, findNode_elem_class, findNode_elem_parent,
+findNode_elem_ancestor, findNode_ID - funcții care sunt specifice fiecărui
+selector și fac căutare în lățime (cu o coadă) a nodurilor care respectă
+acest selector (cu excepția selectorului de ID, unde parcurgerea se face
+eficient asemănător funcției addTag).
+ - overrideNode, aux_appendNode și appenndNode - acestea aplică comenzile
+overrideStyle și appendStyle. Pentru comanda deleteRecursevely, se va folosi
+funcția End.
+ - funcția fixId care repară ID-ul nodurilor arborelui după o ștergere
+recursivă.
+ - funcția isAncestor - funcție auxiliară care verifică dacă nodul cu tag-ul
+"ancestor_name" este strămoșul nodului cu id-ul "id_child" (arb este rădăcina
+arborelui).
+
+7. utils.h - conține antentul funcțiilor din utils.c care sunt apelate și în
+afara acestui fișier
+
+8. tema3.c - conține două funcții: solve și main. În main se deschide fișierul
+html și se citește informația cu ajutorul funcției Begin. Apoi, se deschid
+fișierele commands.in și commands.out pentru a se citi comenzile și a se afișa.
+Se apelează funcția solve care face citirea linie cu linie pentru fiecare
+comandă și apelează funcția specifică. La final, se închid fișierele și se
+dezalocă memoria prin intermediul funcției End.
+
+IMPORTANT:
+    Am folosit VSCode, unde tab-ul ocupă 4 spații. În alte editoare de text,
+tab-ul poate avea dimensiuni mai mari, fapt ce duce la depășirea limitei de 80
+de caractere pe linie.
+
+PUNCTAJ LOCAL:
+
+Total 85/85
+Bonus 20/20
